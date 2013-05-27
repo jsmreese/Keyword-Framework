@@ -9,27 +9,29 @@ On the client, K completely replaces the client keyword hash (daaHash) and all r
 
 On the server, K wraps the native AMEngine keyword functions (keywordUpdate, keywordOrDefault, keywordsToURL, containsKeyword, etc.)
 
-K behavior is harmonized between client and server JavaScript.
+K behavior is harmonized between client and server JavaScript:
 
-* Internally, keyword values input into K are always stored as strings.
-Native number and boolean values are coerced to strings.
-Native objects and arrays are coerced to strings using JSON.stringify.
-Native null and undefined are coerced to empty strings.
+##### Keyword values input into K are stored as strings.
+* Native number and boolean values are coerced to strings.
+* Native objects and arrays are coerced to strings using JSON.stringify.
+* Native null and undefined are coerced to empty strings.
 
-* Externally, keyword values retrieved from K are always coerced to native JavaScript types.
-String values of 'true' and 'false' are coereced to the native JavaScript booleans `true` and `false`.
-String values that appear numeric are coerced to native JavaScript numbers.
-Values that appear to be JSON representations of arrays and objects can be parsed using JSON.parse, they are returned as native arrays and objects.
+##### Keyword values retrieved from K are coerced to native JavaScript types.
+* Values of 'true' and 'false' are coereced to the native JavaScript booleans `true` and `false`.
+* Values that appear numeric are coerced to native JavaScript numbers.
+* Values that appear to be arrays and objects and can be parsed using JSON.parse are coerced to native arrays and objects.
 
-* Keyword values are stored with square brackets escaped by back slashes.
-Keyword values are retrieved with unescaped square brackets.
+##### Keyword values are stored with square brackets escaped.
+* Values are stored with square brackets escaped by back slashes.
+* Values are retrieved with unescaped square brackets.
 
-* If keyword values appear to contain other keywords, those nested keywords will be evaluated if possible.
+##### Nested keywords will be evaluated.
+* If values appear to contain other keywords (they contain multiple tildes), the nested keywords will be evaluated if possible.
 
-* Keyword names should always be lowercase.
-Keyword names will automatically be converted to underscored representation (my_keyword_name).
-A provided camelcased key of myKeywordName will be stored as my_keyword_name.
-Keywords are returned in underscored format by default. Optionally retrieve keywords in camelCased format by setting the `shouldCamelCaseKeys` boolean flag on any getter method that returns key names (any of the K.toX methods).
+##### Keyword names should always be lowercase.
+* Names will automatically be stored in underscored format (my_keyword_name). A provided camelCased key of `myKeywordName` will be stored as `my_keyword_name`.
+* Names are returned in underscored format by default.
+* Optionally retrieve keywords in camelCased format by setting the `shouldCamelCaseKeys` boolean flag on any getter method that returns key names (any of the `K.toX` methods).
 
 
 ### Basic getter/setter
