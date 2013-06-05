@@ -14,7 +14,8 @@ K behavior is harmonized between client and server JavaScript:
 ##### Keyword values input into K are stored as strings.
 * Native number and boolean values are coerced to strings.
 * Native objects and arrays are coerced to strings using JSON.stringify.
-* Native null and undefined are coerced to empty strings.
+* Native `null` is coerced to the string 'null'.
+* Native `undefined` is coerced to the string 'undefined'.
 
 ##### Keyword values retrieved from K are coerced to native JavaScript types.
 * Values of 'true' and 'false' are coereced to the native JavaScript booleans `true` and `false`.
@@ -32,7 +33,9 @@ K behavior is harmonized between client and server JavaScript:
 * Names will automatically be stored in underscored format (my_keyword_name). A provided camelCased key of `myKeywordName` will be stored as `my_keyword_name`.
 * Names are returned in underscored format by default.
 * Optionally retrieve keywords in camelCased format by setting the `shouldCamelCaseKeys` boolean flag on any getter method that returns key names (any of the `K.toX` methods).
-
+* Valid name characters are lowercase letters (a-z), numbers (0-9), underscore (_), and dot (.).
+* Names with uppercase letter characters will be converted to underscored format as above, names with any other invalid characters will cause an exception to be thrown.
+* Names that are not strings or that are empty strings will cause an exception to be thrown.
 
 ### Basic getter/setter
 
@@ -108,6 +111,7 @@ Sets values for each property/value pair in the object, prefixing each key with 
 For all of the getter methods, setting the Boolean shouldCamelCaseKeys flag to `true` will convert all underscored_keys into camelCasedKeys in the return value.
 
 `K.toPairs([shouldCamelCaseKeys,] prefix)`
+`K.toPairs([shouldCamelCaseKeys,] prefixes)`
 
 Gets the name and value of all matching keywords and returns an array of name/value pair objects.
 `prefix` may be a string or an array of prefix values.
@@ -115,6 +119,7 @@ Returns an empty array if no matches are found.
 Matchs ALL keywords if prefix is not supplied or is falsey.
 
 `K.toURL([shouldCamelCaseKeys,] prefix)`
+`K.toURL([shouldCamelCaseKeys,] prefixes)`
 
 Gets the name and value of all matching keywords and returns a URL query string.
 `prefix` may be a string or an array of prefix values.
@@ -123,6 +128,7 @@ Matchs ALL keywords if prefix is not supplied or is falsey.
 All values in the returned URL query string will be URL-encoded.
 
 `K.toObject([shouldCamelCaseKeys,] prefix)`
+`K.toObject([shouldCamelCaseKeys,] prefixes)`
 
 Gets the name and value of all matching keywords and returns an object of property/value pairs.
 `prefix` may be a string or an array of prefix values.
@@ -139,18 +145,20 @@ If `prefix` is not supplied or is falsey, ALL keywords will be deleted. This is 
 Returns `undefined`.
 
 `K.setDefault(key, value)`
-
 `K.setDefault(keys, values, prefix)`
-
 `K.setDefault(pairs, prefix)`
-
 `K.setDefault(urlQueryString, prefix)`
-
 `K.setDefault(object, prefix)`
 
 Sets the value associated with a keyword only if that keyword is not yet defined.
 Accepts all of the standard setter options (strings, arrays, pairs array, URL query string, and object.
 Also accepts a prefix argument when using a signature that allows setting multiple keywords in a single action.
+
+`K.isKeyword(key)`
+`K.isKeyword(keys)`
+`K.isKeyword(keys, prefix)`
+
+Returns a boolean value that is `true` if the key is found in the keyword hash, even if its value is undefined, empty string, or null.
 
 
 ### Events
