@@ -18,9 +18,10 @@ K behavior is harmonized between client and server JavaScript:
 * Native `undefined` is coerced to the string 'undefined'.
 
 ##### Keyword values retrieved from K are coerced to native JavaScript types.
-* Values of 'true' and 'false' are coereced to the native JavaScript booleans `true` and `false`.
+* Values of 'true' and 'false' are coereced to the native JavaScript booleans `true` and `false`. String match for 'true' and 'false' is case insensitive.
 * Values that appear numeric are coerced to native JavaScript numbers.
 * Values that appear to be arrays and objects and can be parsed using JSON.parse are coerced to native arrays and objects.
+* Values of 'null' and 'undefined' are coerced to the native JavaScript values `null` and `undefined`. As with boolean coercion, string match is case insensitive.
 
 ##### Keyword values are stored with square brackets escaped.
 * Values are stored with square brackets escaped by back slashes.
